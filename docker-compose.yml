@@ -1,0 +1,34 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: biblioteca_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: biblioteca
+      MYSQL_PASSWORD: biblioteca
+    ports:
+      - "3306:3306"
+    volumes:
+      - biblioteca_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    environment:
+      BIBLIOTECA_DB_URL: jdbc:mysql://mysql:3306/biblioteca_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima
+      BIBLIOTECA_DB_USER: biblioteca
+      BIBLIOTECA_DB_PASSWORD: biblioteca
+      BIBLIOTECA_SCHEMA_ACTION: update
+      BIBLIOTECA_ADMIN_USER: admin
+      BIBLIOTECA_ADMIN_PASSWORD: "Admin123*"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  biblioteca_data:
