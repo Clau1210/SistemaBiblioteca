@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+    <persistence-unit name="bibliotecaPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>pe.edu.utp.biblioteca.model.Usuario</class>
+        <class>pe.edu.utp.biblioteca.model.Lector</class>
+        <class>pe.edu.utp.biblioteca.model.Autor</class>
+        <class>pe.edu.utp.biblioteca.model.Editorial</class>
+        <class>pe.edu.utp.biblioteca.model.Categoria</class>
+        <class>pe.edu.utp.biblioteca.model.Libro</class>
+        <class>pe.edu.utp.biblioteca.model.Ejemplar</class>
+        <class>pe.edu.utp.biblioteca.model.Prestamo</class>
+        <class>pe.edu.utp.biblioteca.model.DetallePrestamo</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/biblioteca_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Lima"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.jdbc.time_zone" value="America/Lima"/>
+        </properties>
+    </persistence-unit>
+</persistence>
