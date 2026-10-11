@@ -102,6 +102,7 @@ Las contraseñas se almacenan con BCrypt, las sesiones expiran a los 30 minutos,
 - `docs/PLANIFICACION.md`
 - `docs/MATRIZ_TRAZABILIDAD.md`
 - `docs/PRUEBAS.md`
+- `docs/RESULTADO_PRUEBAS.md`
 - `docs/SEGURIDAD.md`
 - `docs/MANUAL_INSTALACION.md`
 - `docs/MANUAL_USUARIO.md`
