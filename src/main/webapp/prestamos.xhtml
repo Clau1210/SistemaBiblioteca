@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:pt="jakarta.faces.passthrough"
+                template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="title">Préstamos | Biblioteca</ui:define>
+    <ui:define name="pageHeader"><h1>Préstamos y devoluciones</h1><p>Control de ejemplares entregados, fechas de vencimiento y devoluciones.</p></ui:define>
+    <ui:define name="content">
+        <div class="grid two">
+            <section class="card"><div class="card-body">
+                <h2 class="card-title">Registrar préstamo</h2>
+                <h:form>
+                    <div class="form-grid">
+                        <div class="field full"><h:outputLabel for="reader" value="Lector"/><h:selectOneMenu id="reader" value="#{prestamoBean.lectorId}" required="true" styleClass="select"><f:selectItem itemValue="#{null}" itemLabel="Seleccione un lector" noSelectionOption="true"/><f:selectItems value="#{prestamoBean.lectores}" var="item" itemValue="#{item.id}" itemLabel="#{item.nombreCompleto} - #{item.numeroDocumento}"/></h:selectOneMenu></div>
+                        <div class="field"><h:outputLabel for="startDate" value="Fecha de préstamo"/><h:inputText id="startDate" value="#{prestamoBean.fechaPrestamo}" required="true" styleClass="input" pt:type="date"><f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/></h:inputText></div>
+                        <div class="field"><h:outputLabel for="dueDate" value="Fecha de vencimiento"/><h:inputText id="dueDate" value="#{prestamoBean.fechaVencimiento}" required="true" styleClass="input" pt:type="date"><f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/></h:inputText></div>
+                        <div class="field full"><h:outputLabel for="copies" value="Ejemplares disponibles"/><h:selectManyListbox id="copies" value="#{prestamoBean.ejemplarIds}" required="true" size="8" styleClass="select"><f:selectItems value="#{prestamoBean.disponibles}" var="item" itemValue="#{item.id}" itemLabel="#{item.codigo} - #{item.libro.titulo}"/></h:selectManyListbox></div>
+                        <div class="field full"><h:outputLabel for="note" value="Observación"/><h:inputTextarea id="note" value="#{prestamoBean.observacion}" maxlength="300" styleClass="textarea"/></div>
+                    </div>
+                    <div class="actions"><h:commandButton value="Registrar préstamo" action="#{prestamoBean.registrar}" styleClass="btn btn-primary"/><h:commandButton value="Limpiar" action="#{prestamoBean.nuevo}" immediate="true" styleClass="btn btn-secondary"/></div>
+                </h:form>
+            </div></section>
+            <section class="card"><div class="card-body">
+                <div class="toolbar"><h2 class="card-title" style="margin:0">Historial de préstamos</h2><h:form styleClass="search"><h:inputText value="#{prestamoBean.search}" styleClass="input" placeholder="Buscar lector o documento"/><h:commandButton value="Buscar" action="#{prestamoBean.buscar}" styleClass="btn btn-secondary"/></h:form></div>
+                <h:form>
+                    <ui:repeat value="#{prestamoBean.items}" var="loan">
+                        <article class="loan">
+                            <div class="loan-header">
+                                <div>
+                                    <strong>#{loan.codigo}</strong> · #{loan.lector.nombreCompleto}<br/>
+                                    <small>
+                                        <h:outputText value="#{loan.fechaPrestamo}"><f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/></h:outputText>
+                                        hasta
+                                        <h:outputText value="#{loan.fechaVencimiento}"><f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/></h:outputText>
+                                    </small>
+                                </div>
+                                <span class="badge #{loan.estado == 'VIGENTE' ? 'badge-success' : loan.estado == 'VENCIDO' ? 'badge-danger' : 'badge-muted'}">#{loan.estado}</span>
+                            </div>
+                            <div class="loan-body">
+                                <ui:repeat value="#{loan.detalles}" var="detail">
+                                    <div class="loan-detail">
+                                        <div>
+                                            <strong>#{detail.ejemplar.libro.titulo}</strong><br/>
+                                            <small>
+                                                Ejemplar #{detail.ejemplar.codigo} ·
+                                                <h:outputText value="Pendiente de devolución" rendered="#{not detail.devuelto}"/>
+                                                <h:panelGroup rendered="#{detail.devuelto}">
+                                                    <h:outputText value="Devuelto el "/>
+                                                    <h:outputText value="#{detail.fechaDevolucion}">
+                                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                                    </h:outputText>
+                                                </h:panelGroup>
+                                            </small>
+                                        </div>
+                                        <h:inputText value="#{prestamoBean.observacionesDevolucion[detail.id]}" styleClass="input" pt:placeholder="Observación" rendered="#{not detail.devuelto}"/>
+                                        <h:commandButton value="Registrar devolución" action="#{prestamoBean.devolver(loan.id, detail.id)}" styleClass="btn btn-success btn-sm" rendered="#{not detail.devuelto}"/>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </article>
+                    </ui:repeat>
+                    <h:panelGroup rendered="#{empty prestamoBean.items}"><div class="empty">No se encontraron préstamos.</div></h:panelGroup>
+                </h:form>
+            </div></section>
+        </div>
+    </ui:define>
+</ui:composition>

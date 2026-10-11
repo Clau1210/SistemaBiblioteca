@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="title">Panel principal | Biblioteca</ui:define>
+    <ui:define name="pageHeader">
+        <h1>Panel principal</h1>
+        <p>Resumen actualizado de la operación bibliotecaria.</p>
+    </ui:define>
+    <ui:define name="content">
+        <section class="grid cards">
+            <article class="card metric"><span>Lectores activos</span><strong>#{dashboardBean.metrics.lectores}</strong></article>
+            <article class="card metric"><span>Libros registrados</span><strong>#{dashboardBean.metrics.libros}</strong></article>
+            <article class="card metric"><span>Ejemplares disponibles</span><strong>#{dashboardBean.metrics.ejemplaresDisponibles}</strong></article>
+            <article class="card metric"><span>Préstamos vigentes</span><strong>#{dashboardBean.metrics.prestamosVigentes}</strong></article>
+            <article class="card metric"><span>Préstamos vencidos</span><strong>#{dashboardBean.metrics.prestamosVencidos}</strong></article>
+        </section>
+        <section class="card" style="margin-top:20px">
+            <div class="card-body">
+                <h2 class="card-title">Acciones rápidas</h2>
+                <div class="actions">
+                    <h:link outcome="/prestamos.xhtml" value="Registrar préstamo" styleClass="btn btn-primary"/>
+                    <h:link outcome="/lectores.xhtml" value="Registrar lector" styleClass="btn btn-secondary"/>
+                    <h:link outcome="/catalogo.xhtml" value="Administrar catálogo" styleClass="btn btn-secondary"/>
+                    <h:link outcome="/reportes.xhtml" value="Generar reportes" styleClass="btn btn-secondary"/>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>

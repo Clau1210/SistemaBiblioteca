@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Acceso | Sistema Biblioteca</title>
+    <h:outputStylesheet library="css" name="app.css"/>
+</h:head>
+<h:body>
+    <div class="login-page">
+        <section class="login-hero">
+            <h1>Libros organizados, préstamos bajo control.</h1>
+            <p>Una plataforma para administrar lectores, catálogo, ejemplares, préstamos, devoluciones e informes desde un solo lugar.</p>
+        </section>
+        <section class="login-panel">
+            <h:form styleClass="login-card">
+                <h2>Bienvenido</h2>
+                <p>Ingrese sus credenciales para continuar.</p>
+                <h:messages styleClass="message-list" errorClass="error"/>
+                <div class="field">
+                    <h:outputLabel for="username" value="Usuario"/>
+                    <h:inputText id="username" value="#{loginBean.username}" required="true" requiredMessage="Ingrese el usuario" styleClass="input" autocomplete="username"/>
+                </div>
+                <div class="field">
+                    <h:outputLabel for="password" value="Contraseña"/>
+                    <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="Ingrese la contraseña" styleClass="input" autocomplete="current-password"/>
+                </div>
+                <h:commandButton value="Ingresar al sistema" action="#{loginBean.login}" styleClass="btn btn-primary"/>
+                <div class="hint">Acceso inicial: admin / Admin123*</div>
+            </h:form>
+        </section>
+    </div>
+</h:body>
+</html>

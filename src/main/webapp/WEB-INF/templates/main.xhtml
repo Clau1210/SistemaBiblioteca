@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title><ui:insert name="title">Sistema Biblioteca</ui:insert></title>
+    <h:outputStylesheet library="css" name="app.css"/>
+</h:head>
+<h:body>
+    <div class="app-shell">
+        <aside id="sidebar" class="sidebar">
+            <div class="brand"><div class="brand-mark">B</div><div><strong>Biblioteca</strong><span>Control de préstamos</span></div></div>
+            <nav class="nav">
+                <h:link outcome="/dashboard.xhtml" value="⌂  Panel principal"/>
+                <h:link outcome="/lectores.xhtml" value="◎  Lectores"/>
+                <h:link outcome="/catalogo.xhtml" value="▤  Catálogo"/>
+                <h:link outcome="/prestamos.xhtml" value="⇄  Préstamos"/>
+                <h:link outcome="/reportes.xhtml" value="▥  Reportes"/>
+                <h:link outcome="/admin/usuarios.xhtml" value="⚙  Usuarios" rendered="#{loginBean.admin}"/>
+                <a href="#{request.contextPath}/acerca">ⓘ  Acerca del sistema</a>
+            </nav>
+            <h:form styleClass="sidebar-user">
+                <strong>#{loginBean.usuario.nombreCompleto}</strong>
+                <small>#{loginBean.usuario.rol}</small>
+                <h:commandButton value="Cerrar sesión" action="#{loginBean.logout}" styleClass="logout"/>
+            </h:form>
+        </aside>
+        <main class="content">
+            <div class="topbar">
+                <div><ui:insert name="pageHeader"/></div>
+                <button type="button" class="menu-button" onclick="toggleMenu()">Menú</button>
+            </div>
+            <h:messages styleClass="message-list" errorClass="error" fatalClass="fatal"/>
+            <ui:insert name="content"/>
+        </main>
+    </div>
+    <h:outputScript library="js" name="app.js" target="body"/>
+</h:body>
+</html>
