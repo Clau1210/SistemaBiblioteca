@@ -10,19 +10,16 @@
 <h:body>
     <div class="app-shell">
         <aside id="sidebar" class="sidebar">
-            <div class="brand"><div class="brand-mark">B</div><div><strong>Biblioteca</strong><span>Control de préstamos</span></div></div>
+            <div class="brand"><div class="brand-mark">B</div><strong>Biblioteca</strong></div>
             <nav class="nav">
-                <h:link outcome="/dashboard.xhtml" value="⌂  Panel principal"/>
-                <h:link outcome="/lectores.xhtml" value="◎  Lectores"/>
-                <h:link outcome="/catalogo.xhtml" value="▤  Catálogo"/>
-                <h:link outcome="/prestamos.xhtml" value="⇄  Préstamos"/>
-                <h:link outcome="/reportes.xhtml" value="▥  Reportes"/>
-                <h:link outcome="/admin/usuarios.xhtml" value="⚙  Usuarios" rendered="#{loginBean.admin}"/>
-                <a href="#{request.contextPath}/acerca">ⓘ  Acerca del sistema</a>
+                <h:link outcome="/dashboard.xhtml" value="⌂  Inicio" title="Inicio"/>
+                <h:link outcome="/lectores.xhtml" value="◎  Lectores" title="Lectores"/>
+                <h:link outcome="/catalogo.xhtml" value="▤  Catálogo" title="Catálogo"/>
+                <h:link outcome="/prestamos.xhtml" value="⇄  Préstamos" title="Préstamos y devoluciones"/>
+                <h:link outcome="/reportes.xhtml" value="▥  Reportes" title="Reportes"/>
+                <h:link outcome="/admin/usuarios.xhtml" value="⚙  Usuarios" title="Usuarios" rendered="#{loginBean.admin}"/>
             </nav>
             <h:form styleClass="sidebar-user">
-                <strong>#{loginBean.usuario.nombreCompleto}</strong>
-                <small>#{loginBean.usuario.rol}</small>
                 <h:commandButton value="Cerrar sesión" action="#{loginBean.logout}" styleClass="logout"/>
             </h:form>
         </aside>
@@ -32,7 +29,9 @@
                 <button type="button" class="menu-button" onclick="toggleMenu()">Menú</button>
             </div>
             <h:messages styleClass="message-list" errorClass="error" fatalClass="fatal"/>
-            <ui:insert name="content"/>
+            <div class="page-content">
+                <ui:insert name="content"/>
+            </div>
         </main>
     </div>
     <h:outputScript library="js" name="app.js" target="body"/>

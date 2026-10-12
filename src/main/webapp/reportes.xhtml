@@ -4,11 +4,43 @@
                 xmlns:ui="jakarta.faces.facelets"
                 template="/WEB-INF/templates/main.xhtml">
     <ui:define name="title">Reportes | Biblioteca</ui:define>
-    <ui:define name="pageHeader"><h1>Reportes</h1><p>Exportación del historial de préstamos para control y seguimiento.</p></ui:define>
+    <ui:define name="pageHeader"/>
     <ui:define name="content">
-        <section class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-            <article class="card"><div class="card-body"><h2 class="card-title">Reporte en Excel</h2><p>Incluye préstamo, lector, documento, ejemplar, libro, fechas y estado en un archivo XLSX.</p><a href="#{request.contextPath}/reportes/prestamos.xlsx" class="btn btn-success">Descargar Excel</a></div></article>
-            <article class="card"><div class="card-body"><h2 class="card-title">Reporte en PDF</h2><p>Genera un documento horizontal preparado para consulta, impresión y presentación.</p><a href="#{request.contextPath}/reportes/prestamos.pdf" class="btn btn-danger">Descargar PDF</a></div></article>
+        <style type="text/css">
+            .content { justify-content: flex-start !important; }
+            .topbar { min-height: 0 !important; margin: 0 !important; }
+            .message-list:empty { display: none !important; }
+            .page-content {
+                display: block !important;
+                flex: 0 0 auto !important;
+                min-height: 0 !important;
+            }
+            .report-grid {
+                display: grid !important;
+                width: min(100%, 820px) !important;
+                margin: 0 auto !important;
+                grid-template-columns: repeat(2, minmax(260px, 380px)) !important;
+                justify-content: center !important;
+                gap: 20px !important;
+            }
+            .report-grid .card,
+            .report-grid .card-body {
+                height: 150px !important;
+                min-height: 150px !important;
+            }
+            .report-grid .card-body {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 24px !important;
+            }
+            @media (max-width: 760px) {
+                .report-grid { grid-template-columns: 1fr !important; }
+            }
+        </style>
+        <section class="grid report-grid">
+            <article class="card"><div class="card-body"><a href="#{request.contextPath}/reportes/prestamos.xlsx" class="btn btn-success">Descargar Excel</a></div></article>
+            <article class="card"><div class="card-body"><a href="#{request.contextPath}/reportes/prestamos.pdf" class="btn btn-danger">Descargar PDF</a></div></article>
         </section>
     </ui:define>
 </ui:composition>

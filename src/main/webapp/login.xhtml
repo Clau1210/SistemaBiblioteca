@@ -8,14 +8,15 @@
 </h:head>
 <h:body>
     <div class="login-page">
-        <section class="login-hero">
-            <h1>Libros organizados, préstamos bajo control.</h1>
-            <p>Una plataforma para administrar lectores, catálogo, ejemplares, préstamos, devoluciones e informes desde un solo lugar.</p>
+        <section class="login-hero"
+                 style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;text-align:center;">
+            <h1 style="width:100%;max-width:650px;margin:0 auto;text-align:center;">
+                Libros organizados, préstamos bajo control.
+            </h1>
         </section>
         <section class="login-panel">
             <h:form styleClass="login-card">
                 <h2>Bienvenido</h2>
-                <p>Ingrese sus credenciales para continuar.</p>
                 <h:messages styleClass="message-list" errorClass="error"/>
                 <div class="field">
                     <h:outputLabel for="username" value="Usuario"/>
@@ -26,7 +27,6 @@
                     <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="Ingrese la contraseña" styleClass="input" autocomplete="current-password"/>
                 </div>
                 <h:commandButton value="Ingresar al sistema" action="#{loginBean.login}" styleClass="btn btn-primary"/>
-                <div class="hint">Acceso inicial: admin / Admin123*</div>
             </h:form>
         </section>
     </div>

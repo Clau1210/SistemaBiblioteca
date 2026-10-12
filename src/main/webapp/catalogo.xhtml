@@ -5,7 +5,7 @@
                 xmlns:ui="jakarta.faces.facelets"
                 template="/WEB-INF/templates/main.xhtml">
     <ui:define name="title">Catálogo | Biblioteca</ui:define>
-    <ui:define name="pageHeader"><h1>Catálogo bibliográfico</h1><p>Administración de libros, ejemplares, autores, editoriales y categorías.</p></ui:define>
+    <ui:define name="pageHeader"/>
     <ui:define name="content">
         <div class="toolbar">
             <div class="tabs">
@@ -39,7 +39,7 @@
                     <h:column><f:facet name="header">Categoría</f:facet>#{item.categoria.nombre}</h:column>
                     <h:column><f:facet name="header">Estado</f:facet><span class="badge #{item.activo ? 'badge-success' : 'badge-muted'}">#{item.activo ? 'ACTIVO' : 'INACTIVO'}</span></h:column>
                     <h:column><f:facet name="header">Acciones</f:facet><div class="actions" style="margin:0"><h:commandButton value="Editar" action="#{catalogoBean.editarLibro(item)}" styleClass="btn btn-secondary btn-sm"/><h:commandButton value="#{item.activo ? 'Desactivar' : 'Activar'}" action="#{catalogoBean.estadoLibro(item.id)}" styleClass="btn #{item.activo ? 'btn-danger' : 'btn-success'} btn-sm"/></div></h:column>
-                </h:dataTable></div><h:panelGroup rendered="#{empty catalogoBean.libros}"><div class="empty">No se encontraron libros.</div></h:panelGroup></div></article>
+                </h:dataTable></div></div></article>
             </div></h:form>
         </section>
 
