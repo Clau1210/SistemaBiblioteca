@@ -33,7 +33,7 @@
                     </div>
                     <div class="actions"><h:commandButton value="Guardar libro" action="#{catalogoBean.guardarLibro}" styleClass="btn btn-primary"/><h:commandButton value="Limpiar" action="#{catalogoBean.nuevos}" immediate="true" styleClass="btn btn-secondary"/></div>
                 </div></article>
-                <article class="card"><div class="card-body"><h2 class="card-title">Libros registrados</h2><div class="table-wrap"><h:dataTable value="#{catalogoBean.libros}" var="item" rendered="#{not empty catalogoBean.libros}">
+                <article class="card"><div class="card-body"><h2 class="card-title">Libros registrados</h2><div class="table-wrap"><h:dataTable value="#{catalogoBean.libros}" var="item">
                     <h:column><f:facet name="header">Libro</f:facet><strong>#{item.titulo}</strong><br/><small>ISBN #{item.isbn}</small></h:column>
                     <h:column><f:facet name="header">Autor</f:facet>#{item.autoresTexto}</h:column>
                     <h:column><f:facet name="header">Categoría</f:facet>#{item.categoria.nombre}</h:column>
@@ -52,9 +52,9 @@
                     <div class="field full"><h:outputLabel for="location" value="Ubicación"/><h:inputText id="location" value="#{catalogoBean.ejemplar.ubicacion}" maxlength="120" styleClass="input"/></div>
                     <div class="field full"><h:outputLabel for="copyNote" value="Observación"/><h:inputTextarea id="copyNote" value="#{catalogoBean.ejemplar.observacion}" maxlength="300" styleClass="textarea"/></div>
                 </div><div class="actions"><h:commandButton value="Guardar ejemplar" action="#{catalogoBean.guardarEjemplar}" styleClass="btn btn-primary"/><h:commandButton value="Limpiar" action="#{catalogoBean.nuevos}" immediate="true" styleClass="btn btn-secondary"/></div></div></article>
-                <article class="card"><div class="card-body"><h2 class="card-title">Ejemplares registrados</h2><div class="table-wrap"><h:dataTable value="#{catalogoBean.ejemplares}" var="item" rendered="#{not empty catalogoBean.ejemplares}">
+                <article class="card"><div class="card-body"><h2 class="card-title">Ejemplares registrados</h2><div class="table-wrap"><h:dataTable value="#{catalogoBean.ejemplares}" var="item">
                     <h:column><f:facet name="header">Código</f:facet><strong>#{item.codigo}</strong></h:column><h:column><f:facet name="header">Libro</f:facet>#{item.libro.titulo}</h:column><h:column><f:facet name="header">Ubicación</f:facet>#{item.ubicacion}</h:column><h:column><f:facet name="header">Estado</f:facet><span class="badge #{item.estado == 'DISPONIBLE' ? 'badge-success' : item.estado == 'PRESTADO' ? 'badge-warning' : 'badge-danger'}">#{item.estado}</span></h:column><h:column><f:facet name="header">Acciones</f:facet><div class="actions" style="margin:0"><h:commandButton value="Editar" action="#{catalogoBean.editarEjemplar(item)}" styleClass="btn btn-secondary btn-sm"/><h:commandButton value="#{item.activo ? 'Desactivar' : 'Activar'}" action="#{catalogoBean.estadoEjemplar(item.id)}" styleClass="btn #{item.activo ? 'btn-danger' : 'btn-success'} btn-sm"/></div></h:column>
-                </h:dataTable></div><h:panelGroup rendered="#{empty catalogoBean.ejemplares}"><div class="empty">No se encontraron ejemplares.</div></h:panelGroup></div></article>
+                </h:dataTable></div></div></article>
             </div></h:form>
         </section>
 

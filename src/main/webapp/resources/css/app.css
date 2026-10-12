@@ -113,66 +113,70 @@ button, input, select, textarea { font: inherit; }
     align-self: flex-start;
 }
 .page-content > .grid.two {
-    flex: 1;
+    flex: none;
     min-height: 0;
     align-items: stretch;
 }
-.page-content > .grid.two > .card,
-.page-content > .grid.two > .card > .card-body {
-    height: 100%;
-}
+.page-content > .grid.two > .card { height: auto; min-height: 0; }
+.page-content > .grid.two > .card > .card-body { height: auto; min-height: 0; }
 .page-content > .grid.two > .card:first-child > .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .page-content > .card {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    flex: none;
 }
 .page-content > .card > .card-body { width: 100%; }
 .page-content > section[data-catalog-panel]:not([hidden]) {
-    display: flex;
-    flex: 1;
+    display: block;
+    flex: none;
     min-height: 0;
 }
 .page-content > section[data-catalog-panel] > form,
 .page-content > section[data-catalog-panel] > form > .grid.two {
     width: 100%;
-    min-height: 100%;
+    min-height: 0;
 }
 .page-content > section[data-catalog-panel] .card,
 .page-content > section[data-catalog-panel] .card-body {
-    height: 100%;
+    height: auto;
+    min-height: 0;
 }
 .page-content > section[data-catalog-panel] .grid.two > .card:first-child > .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .report-grid {
-    flex: none;
-    width: min(100%, 820px);
-    margin: 0 auto;
-    grid-template-columns: repeat(2, minmax(260px, 380px));
-    justify-content: center;
-    align-items: center;
+    flex: 0 0 auto !important;
+    width: min(100%, 680px) !important;
+    margin: 0 auto !important;
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    align-self: flex-start !important;
+    min-height: 0 !important;
+    height: auto !important;
 }
+.report-grid .card { height: auto !important; min-height: 0 !important; }
 .report-grid .card-body {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    min-height: 150px;
-    padding: 28px;
+    gap: 14px;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 24px;
 }
+.report-grid .card-title { width: 100%; margin-bottom: 4px; }
 .topbar h1 { margin: 0; color: var(--navy-dark); font-size: clamp(27px, 3vw, 38px); }
 .topbar p { margin: 6px 0 0; color: var(--muted); }
 .menu-button { display: none; border: 0; border-radius: 10px; padding: 10px 12px; color: white; background: var(--navy); }
 
 .grid { display: grid; gap: 20px; }
-.grid.two { grid-template-columns: minmax(300px, .8fr) minmax(500px, 1.6fr); }
+.grid.two { grid-template-columns: minmax(330px, .72fr) minmax(0, 1.68fr); align-items: stretch; }
 .grid.cards { grid-template-columns: repeat(5, minmax(150px, 1fr)); }
 .card { border: 1px solid rgba(18, 58, 99, .08); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); }
 .card-body { padding: 22px; }
@@ -183,6 +187,7 @@ button, input, select, textarea { font: inherit; }
 .metric strong { display: block; margin-top: 8px; color: var(--navy); font-size: 34px; }
 
 .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+.grid.two > .card:first-child .form-grid { grid-template-columns: 1fr; }
 .field { min-width: 0; }
 .field.full { grid-column: 1 / -1; }
 .field label { display: block; margin-bottom: 6px; color: #354454; font-size: 13px; font-weight: 700; }
@@ -233,7 +238,7 @@ tbody tr:hover { background: #f8fbfd; }
 .message-list { margin: 0 0 18px; padding: 0; list-style: none; }
 .message-list li { margin-bottom: 8px; border-radius: 10px; padding: 11px 14px; background: #e4f5ed; color: #0c6b46; }
 .message-list .error, .message-list .fatal { color: #972b32; background: #fde4e6; }
-.empty { padding: 26px; color: var(--muted); text-align: center; }
+.empty { display: none; }
 .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
 .tab { border: 1px solid #c9d5df; border-radius: 99px; padding: 8px 14px; color: var(--navy); background: white; cursor: pointer; font-weight: 700; }
 .loan { margin-bottom: 14px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }

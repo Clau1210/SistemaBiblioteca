@@ -26,7 +26,7 @@
             <section class="card"><div class="card-body">
                 <div class="toolbar"><h2 class="card-title" style="margin:0">Lectores registrados</h2><h:form styleClass="search"><h:inputText value="#{lectorBean.search}" styleClass="input" placeholder="Buscar por nombre o documento"/><h:commandButton value="Buscar" action="#{lectorBean.buscar}" styleClass="btn btn-secondary"/></h:form></div>
                 <h:form>
-                    <div class="table-wrap"><h:dataTable value="#{lectorBean.items}" var="item" styleClass="data-table" rendered="#{not empty lectorBean.items}">
+                    <div class="table-wrap"><h:dataTable value="#{lectorBean.items}" var="item" styleClass="data-table">
                         <h:column><f:facet name="header">Documento</f:facet>#{item.tipoDocumento} #{item.numeroDocumento}</h:column>
                         <h:column><f:facet name="header">Lector</f:facet><strong>#{item.nombreCompleto}</strong><br/><small>#{item.correo}</small></h:column>
                         <h:column><f:facet name="header">Teléfono</f:facet>#{empty item.telefono ? '—' : item.telefono}</h:column>

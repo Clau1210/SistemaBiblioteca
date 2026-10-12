@@ -6,41 +6,11 @@
     <ui:define name="title">Reportes | Biblioteca</ui:define>
     <ui:define name="pageHeader"/>
     <ui:define name="content">
-        <style type="text/css">
-            .content { justify-content: flex-start !important; }
-            .topbar { min-height: 0 !important; margin: 0 !important; }
-            .message-list:empty { display: none !important; }
-            .page-content {
-                display: block !important;
-                flex: 0 0 auto !important;
-                min-height: 0 !important;
-            }
-            .report-grid {
-                display: grid !important;
-                width: min(100%, 820px) !important;
-                margin: 0 auto !important;
-                grid-template-columns: repeat(2, minmax(260px, 380px)) !important;
-                justify-content: center !important;
-                gap: 20px !important;
-            }
-            .report-grid .card,
-            .report-grid .card-body {
-                height: 150px !important;
-                min-height: 150px !important;
-            }
-            .report-grid .card-body {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                padding: 24px !important;
-            }
-            @media (max-width: 760px) {
-                .report-grid { grid-template-columns: 1fr !important; }
-            }
-        </style>
         <section class="grid report-grid">
-            <article class="card"><div class="card-body"><a href="#{request.contextPath}/reportes/prestamos.xlsx" class="btn btn-success">Descargar Excel</a></div></article>
-            <article class="card"><div class="card-body"><a href="#{request.contextPath}/reportes/prestamos.pdf" class="btn btn-danger">Descargar PDF</a></div></article>
+            <article class="card"><div class="card-body">
+                <a href="#{request.contextPath}/reportes/prestamos.xlsx" class="btn btn-success">Exportar Excel</a>
+                <a href="#{request.contextPath}/reportes/prestamos.pdf" class="btn btn-danger">Exportar PDF</a>
+            </div></article>
         </section>
     </ui:define>
 </ui:composition>
