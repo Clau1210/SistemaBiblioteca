@@ -12,7 +12,8 @@ public final class FacesUtil {
     }
 
     public static void error(Throwable error) {
-        String message = error.getMessage();
+        String message = error instanceof IllegalArgumentException ? error.getMessage() : null;
+        if (!(error instanceof IllegalArgumentException)) org.slf4j.LoggerFactory.getLogger(FacesUtil.class).error("Error de operación", error);
         if (message == null || message.isBlank()) message = "No fue posible completar la operación";
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atención", message));

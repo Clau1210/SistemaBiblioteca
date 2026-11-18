@@ -42,10 +42,10 @@ BIBLIOTECA_DB_USER=root
 BIBLIOTECA_DB_PASSWORD=CLAVE_MYSQL
 BIBLIOTECA_SCHEMA_ACTION=update
 BIBLIOTECA_ADMIN_USER=admin
-BIBLIOTECA_ADMIN_PASSWORD=Admin123*
+BIBLIOTECA_ADMIN_PASSWORD=CLAVE_ADMIN_ELEGIDA
 ```
 
-Si no se definen variables, se utilizará MySQL en `localhost:3306`, el usuario `root` y una contraseña vacía.
+Para una instalación nueva es obligatorio definir BIBLIOTECA_ADMIN_PASSWORD. Los datos de demostración se habilitan con BIBLIOTECA_DEMO=true.
 
 ## Compilación
 
@@ -61,10 +61,12 @@ El archivo generado será `target/SistemaBiblioteca.war`.
 1. Iniciar el dominio de Payara.
 2. Desplegar `target/SistemaBiblioteca.war`.
 3. Abrir `http://localhost:8080/SistemaBiblioteca/`.
-4. Ingresar con `admin` y `Admin123*`.
+4. Ingresar con `admin` y `CLAVE_ADMIN_ELEGIDA`.
 5. Cambiar la contraseña inicial desde el módulo de usuarios.
 
 ## Ejecución con Docker
+
+Copiar `.env.example` a `.env` y definir MYSQL_ROOT_PASSWORD, BIBLIOTECA_DB_PASSWORD y BIBLIOTECA_ADMIN_PASSWORD con claves propias.
 
 ```bash
 docker compose up --build
@@ -109,13 +111,13 @@ Las contraseñas se almacenan con BCrypt, las sesiones expiran a los 30 minutos,
 - `docs/GITHUB.md`
 - `docs/GUIA_DEMOSTRACION.md`
 - `docs/CHECKLIST_ENTREGA.md`
-- `docs/javadoc/index.html`
+- JavaDoc: `mvn javadoc:javadoc`
 - `docs/diagramas/`
 
 ## Credenciales iniciales
 
 | Usuario | Contraseña | Rol |
 |---|---|---|
-| admin | Admin123* | ADMINISTRADOR |
+| admin | CLAVE_ADMIN_ELEGIDA | ADMINISTRADOR |
 
 La cuenta inicial se crea automáticamente durante el primer inicio de la aplicación.

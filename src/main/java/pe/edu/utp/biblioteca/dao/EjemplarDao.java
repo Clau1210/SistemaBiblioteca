@@ -23,7 +23,7 @@ public class EjemplarDao extends GenericDao<Ejemplar> {
     }
 
     public List<Ejemplar> available(EntityManager em) {
-        return em.createQuery("select e from Ejemplar e join fetch e.libro where e.activo = true and e.estado = :state order by e.libro.titulo, e.codigo", Ejemplar.class)
+        return em.createQuery("select e from Ejemplar e join fetch e.libro where e.activo = true and e.libro.activo = true and e.estado = :state order by e.libro.titulo, e.codigo", Ejemplar.class)
                 .setParameter("state", EstadoEjemplar.DISPONIBLE).getResultList();
     }
 

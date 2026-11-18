@@ -3,15 +3,13 @@ services:
     image: mysql:8.4
     environment:
       MYSQL_DATABASE: biblioteca_db
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Defina MYSQL_ROOT_PASSWORD}
       MYSQL_USER: biblioteca
-      MYSQL_PASSWORD: biblioteca
-    ports:
-      - "3306:3306"
+      MYSQL_PASSWORD: ${BIBLIOTECA_DB_PASSWORD:?Defina BIBLIOTECA_DB_PASSWORD}
     volumes:
       - biblioteca_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql --protocol=TCP -h 127.0.0.1 -u \"$$MYSQL_USER\" -D \"$$MYSQL_DATABASE\" -N -e 'SELECT 1'"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -20,15 +18,15 @@ services:
     environment:
       BIBLIOTECA_DB_URL: jdbc:mysql://mysql:3306/biblioteca_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima
       BIBLIOTECA_DB_USER: biblioteca
-      BIBLIOTECA_DB_PASSWORD: biblioteca
+      BIBLIOTECA_DB_PASSWORD: ${BIBLIOTECA_DB_PASSWORD:?Defina BIBLIOTECA_DB_PASSWORD}
       BIBLIOTECA_SCHEMA_ACTION: update
       BIBLIOTECA_ADMIN_USER: admin
-      BIBLIOTECA_ADMIN_PASSWORD: "Admin123*"
+      BIBLIOTECA_ADMIN_PASSWORD: ${BIBLIOTECA_ADMIN_PASSWORD:?Defina BIBLIOTECA_ADMIN_PASSWORD}
+      BIBLIOTECA_DEMO: ${BIBLIOTECA_DEMO:-false}
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
-
 volumes:
   biblioteca_data:

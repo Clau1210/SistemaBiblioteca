@@ -23,7 +23,7 @@ public class AppLifecycleListener implements ServletContextListener {
         try {
             JpaManager.transaction(em -> {
                 Usuario admin = seedAdministrator(em);
-                seedDemoData(em, admin);
+                if (Boolean.parseBoolean(AppConfig.value("BIBLIOTECA_DEMO", "false"))) seedDemoData(em, admin);
             });
             LOGGER.info("Sistema Biblioteca iniciado correctamente");
         } catch (RuntimeException ex) {
@@ -38,7 +38,7 @@ public class AppLifecycleListener implements ServletContextListener {
                 .setParameter("username", username).getResultStream().findFirst().orElse(null);
         if (existing != null) return existing;
         Usuario admin = createUser(username, "Administrador del sistema", "admin@biblioteca.local", Rol.ADMINISTRADOR);
-        admin.setClaveHash(PasswordUtil.hash(AppConfig.value("BIBLIOTECA_ADMIN_PASSWORD", "Admin123*")));
+        admin.setClaveHash(PasswordUtil.hash(AppConfig.value("BIBLIOTECA_ADMIN_PASSWORD", "")));
         em.persist(admin);
         return admin;
     }
@@ -174,7 +174,7 @@ public class AppLifecycleListener implements ServletContextListener {
         item.setNombreUsuario(username);
         item.setNombreCompleto(fullName);
         item.setCorreo(email);
-        item.setClaveHash(PasswordUtil.hash("Admin123*"));
+        item.setClaveHash(PasswordUtil.hash(java.util.UUID.randomUUID().toString()));
         item.setRol(role);
         item.setActivo(true);
         return item;

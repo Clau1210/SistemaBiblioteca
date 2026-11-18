@@ -7,7 +7,6 @@ import pe.edu.utp.biblioteca.dao.UsuarioDao;
 import pe.edu.utp.biblioteca.model.Usuario;
 import pe.edu.utp.biblioteca.util.JpaManager;
 import pe.edu.utp.biblioteca.util.PasswordUtil;
-import pe.edu.utp.biblioteca.util.ValidationUtil;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -16,7 +15,8 @@ public class AuthenticationService {
     private final UsuarioDao usuarioDao = new UsuarioDao();
 
     public Optional<Usuario> authenticate(String username, String password) {
-        String cleanUsername = ValidationUtil.required(username, "El usuario");
+        if (username == null || username.isBlank() || username.length() > 50 || password == null || password.isBlank()) return Optional.empty();
+        String cleanUsername = username.trim().toLowerCase(java.util.Locale.ROOT);
         Optional<Usuario> result = JpaManager.query(em -> usuarioDao.findByUsername(em, cleanUsername))
                 .filter(Usuario::isActivo)
                 .filter(user -> PasswordUtil.matches(password, user.getClaveHash()));

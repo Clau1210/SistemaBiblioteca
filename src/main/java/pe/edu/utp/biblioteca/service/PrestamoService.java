@@ -9,7 +9,6 @@ import pe.edu.utp.biblioteca.dto.PrestamoRequest;
 import pe.edu.utp.biblioteca.model.*;
 import pe.edu.utp.biblioteca.util.JpaManager;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +31,10 @@ public class PrestamoService {
         if (request.lectorId() == null) throw new IllegalArgumentException("Seleccione un lector");
         if (request.usuarioId() == null) throw new IllegalArgumentException("La sesión de usuario no es válida");
         PrestamoPolicy.validarEjemplares(request.ejemplarIds());
-        Set<Long> uniqueIds = new LinkedHashSet<>(request.ejemplarIds());
+        Set<Long> uniqueIds = new java.util.TreeSet<>(request.ejemplarIds());
         PrestamoPolicy.validarFechas(request.fechaPrestamo(), request.fechaVencimiento());
         return JpaManager.transactionResult(em -> {
-            Lector reader = em.find(Lector.class, request.lectorId());
+            Lector reader = em.find(Lector.class, request.lectorId(), LockModeType.PESSIMISTIC_WRITE);
             if (reader == null || !reader.isActivo()) throw new IllegalArgumentException("El lector seleccionado no está disponible");
             PrestamoPolicy.validarPrestamosActivos(dao.countActiveByReader(em, reader.getId()));
             Usuario user = em.find(Usuario.class, request.usuarioId());
@@ -49,7 +48,7 @@ public class PrestamoService {
             loan.setEstado(EstadoPrestamo.VIGENTE);
             for (Long copyId : uniqueIds) {
                 Ejemplar copy = em.find(Ejemplar.class, copyId, LockModeType.PESSIMISTIC_WRITE);
-                if (copy == null || !copy.isActivo() || copy.getEstado() != EstadoEjemplar.DISPONIBLE) {
+                if (copy == null || !copy.isActivo() || !copy.getLibro().isActivo() || copy.getEstado() != EstadoEjemplar.DISPONIBLE) {
                     throw new IllegalArgumentException("Uno de los ejemplares seleccionados ya no se encuentra disponible");
                 }
                 copy.setEstado(EstadoEjemplar.PRESTADO);
