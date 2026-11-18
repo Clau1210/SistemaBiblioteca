@@ -27,8 +27,11 @@ public class UsuarioBean implements Serializable {
     public void nuevo() { form = new Usuario(); form.setRol(Rol.ENCARGADO); form.setActivo(true); password = null; }
     public void editar(Long id) { form = service.find(id); password = null; }
     public void guardar() {
-        try { service.save(form, password); FacesUtil.success("Usuario guardado correctamente"); nuevo(); buscar(); }
+        try {
+            if (loginBean.getUsuario().getId().equals(form.getId()) && (!form.isActivo() || form.getRol() != Rol.ADMINISTRADOR)) throw new IllegalArgumentException("No puede retirar sus propios permisos administrativos");
+            service.save(form, password); FacesUtil.success("Usuario guardado correctamente"); nuevo(); buscar(); }
         catch (RuntimeException ex) { FacesUtil.error(ex); }
+        finally { password = null; }
     }
     public void cambiarEstado(Long id) {
         try { service.toggle(id, loginBean.getUsuario().getId()); FacesUtil.success("Estado actualizado"); buscar(); }

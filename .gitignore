@@ -6,3 +6,8 @@ target/
 .env
 docker/mysql/
 nb-configuration.xml
+
+.env.*
+!.env.example
+*.bak
+*.backup

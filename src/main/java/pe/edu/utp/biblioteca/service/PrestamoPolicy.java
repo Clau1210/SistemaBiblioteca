@@ -17,6 +17,7 @@ public final class PrestamoPolicy {
 
     public static void validarEjemplares(Collection<Long> ids) {
         if (ids == null || ids.isEmpty()) throw new IllegalArgumentException("Seleccione al menos un ejemplar");
+        if (ids.stream().anyMatch(id -> id == null || id <= 0)) throw new IllegalArgumentException("Ejemplar no válido");
         if (new HashSet<>(ids).size() > MAX_EJEMPLARES) throw new IllegalArgumentException("Un préstamo puede contener como máximo cinco ejemplares");
     }
 

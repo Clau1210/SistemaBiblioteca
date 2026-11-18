@@ -28,4 +28,15 @@ class PrestamoPolicyTest {
     void rechazaLectorConTresPrestamosActivos() {
         assertThrows(IllegalArgumentException.class, () -> PrestamoPolicy.validarPrestamosActivos(3));
     }
+    @Test
+    void rechazaIdentificadoresInvalidos() {
+        assertThrows(IllegalArgumentException.class, () -> PrestamoPolicy.validarEjemplares(List.of(0L)));
+        assertThrows(IllegalArgumentException.class, () -> PrestamoPolicy.validarEjemplares(java.util.Arrays.asList(1L, null)));
+    }
+
+    @Test
+    void aceptaLimitesValidos() {
+        assertDoesNotThrow(() -> PrestamoPolicy.validarEjemplares(List.of(1L, 2L, 3L, 4L, 5L)));
+        assertDoesNotThrow(() -> PrestamoPolicy.validarPrestamosActivos(2));
+    }
 }

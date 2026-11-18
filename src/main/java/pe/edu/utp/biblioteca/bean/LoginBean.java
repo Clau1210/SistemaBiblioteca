@@ -23,7 +23,12 @@ public class LoginBean implements Serializable {
     private AuthenticationService authenticationService;
 
     public void login() throws IOException {
-        Usuario authenticated = authenticationService.authenticate(username, password).orElse(null);
+        Usuario authenticated;
+        try {
+            authenticated = authenticationService.authenticate(username, password).orElse(null);
+        } finally {
+            password = null;
+        }
         if (authenticated == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Acceso denegado", "Usuario o contraseña incorrectos"));

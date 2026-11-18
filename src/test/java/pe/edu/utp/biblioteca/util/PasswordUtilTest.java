@@ -16,4 +16,9 @@ class PasswordUtilTest {
     void rechazaClaveCorta() {
         assertThrows(IllegalArgumentException.class, () -> PasswordUtil.hash("123"));
     }
+    @Test
+    void rechazaHashInvalidoYClaveExcesiva() {
+        assertFalse(PasswordUtil.matches("ClaveSegura", "invalido"));
+        assertThrows(IllegalArgumentException.class, () -> PasswordUtil.hash("a".repeat(73)));
+    }
 }

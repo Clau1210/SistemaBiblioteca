@@ -2,6 +2,8 @@
 
 ## Ejecutar con Docker
 
+Copie `.env.example` a `.env` y complete las tres contraseñas requeridas.
+
 ```bash
 docker compose up --build
 ```
@@ -10,7 +12,7 @@ Abra `http://localhost:8080/SistemaBiblioteca/` e ingrese con:
 
 | Usuario | Contraseña |
 |---|---|
-| admin | Admin123* |
+| admin | CLAVE_ADMIN_ELEGIDA |
 
 ## Ejecutar de forma tradicional
 
@@ -20,4 +22,4 @@ Abra `http://localhost:8080/SistemaBiblioteca/` e ingrese con:
 4. Ejecute `mvn clean package`.
 5. Despliegue `target/SistemaBiblioteca.war` en Payara.
 
-El archivo compilado incluido en la entrega se llama `SistemaBiblioteca.war`. Los detalles están en `README.md` y `docs/MANUAL_INSTALACION.md`.
+El archivo compilado generado por Maven se llama `SistemaBiblioteca.war`. Los detalles están en `README.md` y `docs/MANUAL_INSTALACION.md`.
