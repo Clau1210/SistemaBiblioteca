@@ -21,6 +21,11 @@
             <property name="jakarta.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.pool_size" value="5"/>
+            <property name="hibernate.connection.initial_pool_size" value="1"/>
+            <property name="hibernate.connection.connectTimeout" value="60000"/>
+            <property name="hibernate.connection.socketTimeout" value="120000"/>
+            <property name="hibernate.connection.sessionVariables" value="net_read_timeout=120,net_write_timeout=120"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.jdbc.time_zone" value="America/Lima"/>
