@@ -78,15 +78,15 @@
       <iiop-service>
         <orb use-thread-pool-ids="thread-pool-1">
         </orb>
-        <iiop-listener address="0.0.0.0" port="3700" lazy-init="true" id="orb-listener-1">
+        <iiop-listener address="0.0.0.0" port="3700" lazy-init="true" id="orb-listener-1" enabled="false">
         </iiop-listener>
         <ssl>
         </ssl>
-        <iiop-listener address="0.0.0.0" port="3820" id="SSL" security-enabled="true">
+        <iiop-listener address="0.0.0.0" port="3820" id="SSL" security-enabled="true" enabled="false">
           <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" cert-nickname="s1as">
           </ssl>
         </iiop-listener>
-        <iiop-listener address="0.0.0.0" port="3920" id="SSL_MUTUALAUTH" security-enabled="true">
+        <iiop-listener address="0.0.0.0" port="3920" id="SSL_MUTUALAUTH" security-enabled="true" enabled="false">
           <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" cert-nickname="s1as" client-auth-enabled="true">
           </ssl>
         </iiop-listener>
@@ -366,7 +366,7 @@
         <network-listeners>
           <network-listener protocol="http-listener-1" port="8080" name="http-listener-1" thread-pool="http-thread-pool" transport="tcp">
           </network-listener>
-          <network-listener protocol="http-listener-2" port="8181" name="http-listener-2" thread-pool="http-thread-pool" transport="tcp">
+          <network-listener protocol="http-listener-2" port="8181" name="http-listener-2" thread-pool="http-thread-pool" transport="tcp" enabled="false">
           </network-listener>
           <network-listener protocol="pu-protocol" port="4848" name="admin-listener" thread-pool="admin-thread-pool" transport="tcp">
           </network-listener>

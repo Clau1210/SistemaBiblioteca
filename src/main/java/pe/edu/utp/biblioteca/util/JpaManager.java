@@ -9,9 +9,17 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class JpaManager {
-    private static final EntityManagerFactory FACTORY = createFactory();
+
+    private static EntityManagerFactory factory;
 
     private JpaManager() {}
+
+    private static synchronized EntityManagerFactory getFactory() {
+        if (factory == null || !factory.isOpen()) {
+            factory = createFactory();
+        }
+        return factory;
+    }
 
     private static EntityManagerFactory createFactory() {
         Map<String, Object> properties = new HashMap<>();
@@ -24,7 +32,7 @@ public final class JpaManager {
     }
 
     public static <T> T query(Function<EntityManager, T> operation) {
-        EntityManager em = FACTORY.createEntityManager();
+        EntityManager em = getFactory().createEntityManager();
         try {
             return operation.apply(em);
         } finally {
@@ -33,14 +41,16 @@ public final class JpaManager {
     }
 
     public static <T> T transactionResult(Function<EntityManager, T> operation) {
-        EntityManager em = FACTORY.createEntityManager();
+        EntityManager em = getFactory().createEntityManager();
         try {
             em.getTransaction().begin();
             T result = operation.apply(em);
             em.getTransaction().commit();
             return result;
         } catch (RuntimeException ex) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             throw ex;
         } finally {
             em.close();
@@ -54,7 +64,15 @@ public final class JpaManager {
         });
     }
 
-    public static void close() {
-        if (FACTORY.isOpen()) FACTORY.close();
+    public static synchronized void close() {
+        if (factory != null) {
+            try {
+                if (factory.isOpen()) {
+                    factory.close();
+                }
+            } finally {
+                factory = null;
+            }
+        }
     }
 }
